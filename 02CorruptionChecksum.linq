@@ -24,7 +24,7 @@ int CorruptionChecksumPartTwo(int[][] input)
 	});
 }
 
-public static class Day2Extensions
+public static class Extensions
 {
 	public static IEnumerable<(int hi, int lo)> Pairs(this int[] array)
 	{
