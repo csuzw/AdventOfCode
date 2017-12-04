@@ -8,42 +8,21 @@ void Main()
 
 int HighEntropyPassphrasesPartOne(string[] passPhrases)
 {
-	return DoHighEntropyPassphrases(passPhrases, w => new[] { w });
+	return DoHighEntropyPassphrases(passPhrases, w => w);
 }
 
 int HighEntropyPassphrasesPartTwo(string[] passPhrases)
 {
-	return DoHighEntropyPassphrases(passPhrases, w => w.Permutations());
+	return DoHighEntropyPassphrases(passPhrases, w => string.Concat(w.OrderBy(c => c)));
 }
 
-int DoHighEntropyPassphrases(string[] passPhrases, Func<string, IEnumerable<string>> enumerate)
+int DoHighEntropyPassphrases(string[] passPhrases, Func<string, string> map)
 {
 	return passPhrases.Count(words =>
 		{
 			var set = new HashSet<string>();
-			return words.Split(' ').All(word => enumerate(word).All(i => set.Add(i)));
+			return words.Split(' ').All(word => set.Add(map(word)));
 		});
-}
-
-public static class Extensions
-{
-	public static IEnumerable<string> Permutations(this string word)
-	{
-		if (word.Length <= 0) yield break;
-		if (word.Length == 1) yield return word;
-
-		var permutations = new HashSet<string>();
-
-		var toInsert = word[0].ToString();
-		foreach (var item in Permutations(word.Substring(1)))
-		{
-			for (var i = 0; i <= item.Length; i++)
-			{
-				var newPermutation = item.Insert(i, toInsert);
-				if (permutations.Add(newPermutation)) yield return newPermutation;
-			}
-		}
-	}
 }
 
 static readonly string[] Input = new string[] {
