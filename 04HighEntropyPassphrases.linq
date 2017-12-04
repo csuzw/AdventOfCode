@@ -25,7 +25,7 @@ int DoHighEntropyPassphrases(string[] passPhrases, Func<string, IEnumerable<stri
 		});
 }
 
-public static class Day4Extensions
+public static class Extensions
 {
 	public static IEnumerable<string> Permutations(this string word)
 	{
