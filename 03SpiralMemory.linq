@@ -29,7 +29,7 @@ int SpiralMemoryPartTwo(int value)
 	var current = memory.Get(position);
 	while (current < value)
 	{
-		position = memory.GetNext(position);
+		position = memory.GetNextPosition(position);
 		current = memory.GetSumOfAdjacent(position);
 		memory.Set(position, current);
 	}
@@ -70,7 +70,7 @@ class SpiralMemory
 		return Get(x + 1, y + 1) + Get(x + 1, y) + Get(x + 1, y - 1) + Get(x, y + 1) + Get(x, y - 1) + Get(x - 1, y + 1) + Get(x - 1, y) + Get(x - 1, y - 1);
 	}
 
-	public (int x, int y) GetNext((int, int) position)
+	public (int x, int y) GetNextPosition((int, int) position)
 	{
 		(var x, var y) = position;
 		if (Get(x - 1, y) > 0 && Get(x, y + 1) == 0) return (x, y + 1);
