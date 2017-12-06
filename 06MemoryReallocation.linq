@@ -10,7 +10,7 @@ int MemoryReallocationPartOne(int[] input)
 {
 	var set = new HashSet<string>();
 	return input
-		.AsSequence()
+		.AsMemoryReallocationSequence()
 		.Select(i => i.ToStringRepresentation())
 		.TakeWhile(i => set.Add(i))
 		.Count();
@@ -20,7 +20,7 @@ int MemoryReallocationPartTwo(int[] input)
 {
 	var map = new Dictionary<string, int>();
 	var recurrentItem = input
-		.AsSequence()
+		.AsMemoryReallocationSequence()
 		.Select((m, i) => (Key: m.ToStringRepresentation(), Index: i))
 		.First(i => 
 		{
@@ -38,25 +38,17 @@ static class Extensions
 		return string.Join("|", input);
 	}
 	
-	public static IEnumerable<int[]> AsSequence(this int[] input)
+	public static IEnumerable<int[]> AsMemoryReallocationSequence(this int[] input)
 	{
 		var length = input.Length;
 		var state = new int[length];
 		input.CopyTo(state, 0);
 		yield return state;
 		while (true)
-		{
-			var newState = new int[length];		
-			(var value, var index) = state.Select((v, i) => (v, i)).Aggregate((acc, next) => next.v > acc.v ? next : acc);
-			for (int i = 0; i < length; i++)
-			{
-				newState[i] = 
-					(i == index ? 0 : state[i]) + 
-					(value / length) + 
-					((length + i - index - 1) % length < value % length ? 1 : 0);
-			}
-			yield return newState;
-			state = newState;
+		{		
+			(var value, var index) = state.Select((v, i) => (v, i)).Aggregate((acc, next) => next.v > acc.v ? next : acc);	
+			state = state.Select((v, i) => (i == index ? 0 : v) + (value / length) + ((length + i - index - 1) % length < value % length ? 1 : 0)).ToArray();
+			yield return state;
 		}
 	}
 }
