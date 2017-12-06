@@ -2,8 +2,8 @@
 
 void Main()
 {
-	AMazeOfTwistyTrampolinesAllAlikePartOne((int[])Input.Clone()).Dump();
-	AMazeOfTwistyTrampolinesAllAlikePartTwo((int[])Input.Clone()).Dump();
+	AMazeOfTwistyTrampolinesAllAlikePartOne(Input).Dump();
+	AMazeOfTwistyTrampolinesAllAlikePartTwo(Input).Dump();
 }
 
 int AMazeOfTwistyTrampolinesAllAlikePartOne(int[] input)
@@ -30,7 +30,7 @@ int DoAMazeOfTwistyTrampolinesAllAlike(int[] input, Func<int, int> increment)
 	return jump;
 }
 
-static readonly int[] Example = new[]
+int[] Example => new[]
 {
 	0,
 	3,
@@ -39,7 +39,7 @@ static readonly int[] Example = new[]
 	-3
 };
 
-static readonly int[] Input = new[]
+int[] Input => new[]
 {
 	2,
 	2,
