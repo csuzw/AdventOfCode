@@ -9,3 +9,4 @@ http://adventofcode.com/
 4. [High-Entropy Passphrases](https://github.com/csuzw/AdventOfCode/blob/master/04HighEntropyPassphrases.linq)
 5. [A Maze of Twisty Trampolines, All Alike](https://github.com/csuzw/AdventOfCode/blob/master/05AMazeOfTwistyTrampolinesAllAlike.linq)
 6. [Memory Reallocation](https://github.com/csuzw/AdventOfCode/blob/master/06MemoryReallocation.linq)
+7. [Recursive Circus](https://github.com/csuzw/AdventOfCode/blob/master/07RecursiveCircus.linq)
