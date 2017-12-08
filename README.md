@@ -10,3 +10,4 @@ http://adventofcode.com/
 5. [A Maze of Twisty Trampolines, All Alike](https://github.com/csuzw/AdventOfCode/blob/master/05AMazeOfTwistyTrampolinesAllAlike.linq)
 6. [Memory Reallocation](https://github.com/csuzw/AdventOfCode/blob/master/06MemoryReallocation.linq)
 7. [Recursive Circus](https://github.com/csuzw/AdventOfCode/blob/master/07RecursiveCircus.linq)
+8. [I Heard You Like Registers](https://github.com/csuzw/AdventOfCode/blob/master/08IHeardYouLikeRegisters.linq)
