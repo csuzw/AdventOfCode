@@ -11,3 +11,4 @@ http://adventofcode.com/
 6. [Memory Reallocation](https://github.com/csuzw/AdventOfCode/blob/master/06MemoryReallocation.linq)
 7. [Recursive Circus](https://github.com/csuzw/AdventOfCode/blob/master/07RecursiveCircus.linq)
 8. [I Heard You Like Registers](https://github.com/csuzw/AdventOfCode/blob/master/08IHeardYouLikeRegisters.linq)
+9. [Stream Processing](https://github.com/csuzw/AdventOfCode/blob/master/09StreamProcessing.linq)
