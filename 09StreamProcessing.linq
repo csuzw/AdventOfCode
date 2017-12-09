@@ -33,26 +33,8 @@ void Main()
 	StreamProcessingPartTwo(Input).Dump();
 }
 
-int StreamProcessingPartOne(string input)
-{
-	return input.ToCharArray().Aggregate((groupScore: 0, level: 1, ignore: false, garbage: false), (acc, c) => 
-	(
-		acc.groupScore + (!acc.ignore && !acc.garbage && c == '{' ? acc.level : 0),
-		acc.level - (!acc.garbage && (c == '{' || c == '}') ? c - 124 : 0),
-		IsIgnored(c, acc.ignore),
-		IsGarbage(c, acc.ignore, acc.garbage)
-	)).groupScore;
-}
-
-int StreamProcessingPartTwo(string input)
-{
-	return input.ToCharArray().Aggregate((garbageCharacters: 0, ignore: false, garbage: false), (acc, c) =>
-	(
-		acc.garbageCharacters + (acc.garbage && !acc.ignore && (c != '!' && c != '>') ? 1 : 0),
-		IsIgnored(c, acc.ignore),
-		IsGarbage(c, acc.ignore, acc.garbage)
-	)).garbageCharacters;
-}
+int StreamProcessingPartOne(string input) => input.ToCharArray().Aggregate((groupScore: 0, level: 1, ignore: false, garbage: false), (acc, c) => (acc.groupScore + (!acc.ignore && !acc.garbage && c == '{' ? acc.level : 0), acc.level - (!acc.garbage && (c == '{' || c == '}') ? c - 124 : 0), IsIgnored(c, acc.ignore), IsGarbage(c, acc.ignore, acc.garbage))).groupScore;
+int StreamProcessingPartTwo(string input) => input.ToCharArray().Aggregate((garbageCharacters: 0, ignore: false, garbage: false), (acc, c) => (acc.garbageCharacters + (acc.garbage && !acc.ignore && (c != '!' && c != '>') ? 1 : 0), IsIgnored(c, acc.ignore), IsGarbage(c, acc.ignore, acc.garbage))).garbageCharacters;
 
 bool IsIgnored(char c, bool ignore) => !ignore && c == '!';
 bool IsGarbage(char c, bool ignore, bool garbage) => (garbage && (c != '>' || ignore)) || (!garbage && c == '<');
