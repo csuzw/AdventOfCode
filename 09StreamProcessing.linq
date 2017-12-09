@@ -35,9 +35,9 @@ void Main()
 
 int StreamProcessingPartOne(string input)
 {
-	return input.ToCharArray().Aggregate((groupScore: 0, level: 0, ignore: false, garbage: false), (acc, c) => 
+	return input.ToCharArray().Aggregate((groupScore: 0, level: 1, ignore: false, garbage: false), (acc, c) => 
 	(
-		acc.groupScore + (!acc.ignore && !acc.garbage && c == '{' ? acc.level + 1 : 0),
+		acc.groupScore + (!acc.ignore && !acc.garbage && c == '{' ? acc.level : 0),
 		acc.level - (!acc.garbage && (c == '{' || c == '}') ? c - 124 : 0),
 		IsIgnored(c, acc.ignore),
 		IsGarbage(c, acc.ignore, acc.garbage)
