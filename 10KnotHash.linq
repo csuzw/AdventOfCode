@@ -26,7 +26,7 @@ string KnotHashPartTwo(string input)
 	var denseHash = sparseHash
 		.Select((v, i) => (value: v, index: i))
 		.GroupBy(i => i.index / 16)
-		.Select(g => g.Aggregate((byte)0x0, (acc, i) => (byte)(acc ^ i.value)));
+		.Select(g => g.Aggregate(0x0, (acc, i) => (byte)(acc ^ i.value)));
 	return denseHash
 		.Aggregate(new StringBuilder(), (acc, i) => acc.Append($"{i:x2}"))
 		.ToString();
