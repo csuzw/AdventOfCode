@@ -18,10 +18,10 @@ static class Extensions
 		{
 			switch (step)
 			{
-				case "n": ReduceN(); break;
+				case "n" : ReduceN();  break;
 				case "ne": ReduceNE(); break;
 				case "se": ReduceSE(); break;
-				case "s": ReduceS(); break;
+				case "s" : ReduceS();  break;
 				case "sw": ReduceSW(); break;
 				case "nw": ReduceNW(); break;
 			}
@@ -29,11 +29,11 @@ static class Extensions
 		}
 		
 		void ReduceN()  { if (se > 0) { se--; ReduceNE(); } else if (sw > 0) { sw--; ReduceNW(); } else if (s > 0)  { s--;  } else { n++;  } }
-		void ReduceNE() { if (nw > 0) { nw--; ReduceN();  } else if (s > 0)  { s--; ReduceSE();  } else if (sw > 0) { sw--; } else { ne++; } }
-		void ReduceSE() { if (sw > 0) { sw--; ReduceS();  } else if (n > 0)  { n--; ReduceNE();  } else if (nw > 0) { nw--; } else { se++; } }
+		void ReduceNE() { if (nw > 0) { nw--; ReduceN();  } else if (s > 0)  { s--;  ReduceSE(); } else if (sw > 0) { sw--; } else { ne++; } }
+		void ReduceSE() { if (sw > 0) { sw--; ReduceS();  } else if (n > 0)  { n--;  ReduceNE(); } else if (nw > 0) { nw--; } else { se++; } }
 		void ReduceS()  { if (ne > 0) { ne--; ReduceSE(); } else if (nw > 0) { nw--; ReduceSW(); } else if (n > 0)  { n--;  } else { s++;  } }
-		void ReduceSW() { if (se > 0) { se--; ReduceS();  } else if (n > 0)  { n--; ReduceNW();  } else if (ne > 0) { ne--; } else { sw++; } }
-		void ReduceNW() { if (ne > 0) { ne--; ReduceN();  } else if (s > 0)  { s--; ReduceSW();  } else if (se > 0) { se--; } else { nw++; } }
+		void ReduceSW() { if (se > 0) { se--; ReduceS();  } else if (n > 0)  { n--;  ReduceNW(); } else if (ne > 0) { ne--; } else { sw++; } }
+		void ReduceNW() { if (ne > 0) { ne--; ReduceN();  } else if (s > 0)  { s--;  ReduceSW(); } else if (se > 0) { se--; } else { nw++; } }
 	}
 }
 
