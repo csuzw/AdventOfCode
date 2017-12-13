@@ -15,3 +15,4 @@ http://adventofcode.com/
 10. [Knot Hash](https://github.com/csuzw/AdventOfCode/blob/master/10KnotHash.linq)
 11. [Hex Ed](https://github.com/csuzw/AdventOfCode/blob/master/11HexEd.linq)
 12. [Digital Plumber](https://github.com/csuzw/AdventOfCode/blob/master/12DigitalPlumber.linq)
+13. [Packet Scanners](https://github.com/csuzw/AdventOfCode/blob/master/13PacketScanners.linq)
