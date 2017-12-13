@@ -13,25 +13,30 @@ int PacketScannersPartOne(string[] input)
 
 int PacketScannersPartTwo(string[] input)
 {
-	return Enumerable.Range(1, int.MaxValue).First(delay => input.ToLayers().GetTripSeverity(delay) == 0);
+	var layers = input.ToLayers().ToList();
+	return Enumerable.Range(0, int.MaxValue).First(layers.IsSuccessful);
 }
 
 static class Extensions
 {
-	public static int GetTripSeverity(this IEnumerable<(int depth, int range)> layers, int delay = 0)
+	public static int GetTripSeverity(this IEnumerable<(int depth, int range)> layers)
 	{
-		return layers.Where(Collision).Sum(Score);
-
-		bool Collision((int depth, int range) layer) => (layer.depth + delay) % (2 * layer.range - 2) == 0;
-		int Score((int depth, int range) layer) => (layer.depth + delay) * layer.range;
+		return layers.Where(layer => IsCollision(layer, 0)).Sum(layer => layer.depth * layer.range);
 	}
-	
+
+	public static bool IsSuccessful(this IEnumerable<(int depth, int range)> layers, int delay = 0)
+	{
+		return !layers.Any(layer => IsCollision(layer, delay));
+	}
+
 	public static IEnumerable<(int depth, int range)> ToLayers(this IEnumerable<string> input)
 	{
 		return input.Select(Parse);
 
 		(int, int) Parse(string value) => (int.Parse(value.Substring(0, value.IndexOf(':'))), int.Parse(value.Substring(value.IndexOf(' '))));
 	}
+
+	private static bool IsCollision((int depth, int range) layer, int delay = 0) => (layer.depth + delay) % (2 * layer.range - 2) == 0;
 }
 
 // 1: 24, 2: 10
