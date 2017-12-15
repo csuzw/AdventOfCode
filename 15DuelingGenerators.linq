@@ -72,5 +72,5 @@ abstract class Generator : IEnumerable<long>
 // 1: 588, 2: 309
 (long A, long B) Example => (65, 8_921);
 
-// 1: 626, 2:
+// 1: 626, 2: 306
 (long A, long B) Input => (679, 771);
