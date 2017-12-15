@@ -11,7 +11,7 @@ int DuelingGeneratorsPartOne((long A, long B) input)
 	var generatorA = new GeneratorA(input.A, true);
 	var generatorB = new GeneratorB(input.B, true);
 	
-	return generatorA.Zip(generatorB, DoLower16BitsMatch).Take(40_000_000).Count(i => i);
+	return generatorA.Zip(generatorB, AreLower16BitsTheSame).Take(40_000_000).Count(i => i);
 }
 
 int DuelingGeneratorsPartTwo((long A, long B) input)
@@ -19,10 +19,10 @@ int DuelingGeneratorsPartTwo((long A, long B) input)
 	var generatorA = new GeneratorA(input.A);
 	var generatorB = new GeneratorB(input.B);
 
-	return generatorA.Zip(generatorB, DoLower16BitsMatch).Take(5_000_000).Count(i => i);
+	return generatorA.Zip(generatorB, AreLower16BitsTheSame).Take(5_000_000).Count(i => i);
 }
 
-bool DoLower16BitsMatch(long a, long b) => (a & 0xffff) == (b & 0xffff);
+bool AreLower16BitsTheSame(long a, long b) => (a & 0xffff) == (b & 0xffff);
 
 class GeneratorA : Generator
 {
