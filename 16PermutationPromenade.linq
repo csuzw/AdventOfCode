@@ -1,3 +1,5 @@
+<Query Kind="Program" />
+
 void Main()
 {
 	PermutationPromenadePartOne(Input).Dump();
