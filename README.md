@@ -18,3 +18,4 @@ http://adventofcode.com/
 13. [Packet Scanners](https://github.com/csuzw/AdventOfCode/blob/master/13PacketScanners.linq)
 14. [Disk Defragmentation](https://github.com/csuzw/AdventOfCode/blob/master/14DiskDefragmentation.linq) (incomplete)
 15. [Dueling Generators](https://github.com/csuzw/AdventOfCode/blob/master/15DuelingGenerators.linq)
+16. [Permutation Promenade](https://github.com/csuzw/AdventOfCode/blob/master/16PermutationPromenade.linq)
