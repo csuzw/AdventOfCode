@@ -3,7 +3,7 @@
 void Main()
 {
 	PermutationPromenadePartOne(Input).Dump();
-	PermutationPromenadePartTwo(Example, 5, 2).Dump();
+	PermutationPromenadePartTwo(Input).Dump();
 }
 
 string PermutationPromenadePartOne(string input, int length = 16)
@@ -17,29 +17,27 @@ string PermutationPromenadePartOne(string input, int length = 16)
 
 string PermutationPromenadePartTwo(string input, int length = 16, int repeat = 1_000_000_000)
 {
-	var state = input
+	var instructions = input
 		.Split(',')
 		.Select(i => i.Parse())
-		.Aggregate(Enumerable.Range(0, length).ToArray(), (acc, i) => i(acc));
-
-	//abcde
-	//baedc
-	//ceadb
-
+		.ToList();
+	var visited = new Dictionary<string, int>();
+	var state = Enumerable.Range(0, length).ToArray();
+	
+	for (var i = 0; i < repeat; i++)
+	{
+		state = instructions.Execute(state);
+		var key = state.AsString();
+		if (visited.ContainsKey(key))
+		{
+			var cycle = i - visited[key];
+			i += ((repeat - i) / cycle) * cycle; // skip ahead
+			continue;
+		}
+		visited[key] = i;
+	}
 	return state.AsString();
 }
-
-// takes over 30 minutes!
-//var instructions = input
-//	.Split(',')
-//	.Select(i => i.Parse())
-//	.ToList();
-//var state = Enumerable.Range(0, length).ToArray();
-//for (var _ = 0; _ < repeat; _++)
-//{
-//	state = instructions.Aggregate(state, (acc, i) => i(acc));
-//}
-//return state.AsString();
 
 static class Extensions
 {
@@ -47,6 +45,15 @@ static class Extensions
 	{
 		return Parsers[instruction[0]](instruction);
 	}	
+	
+	public static int[] Execute(this IEnumerable<Func<int[], int[]>> source, int[] state)
+	{
+		foreach (var item in source)
+		{
+			state = item(state);
+		}
+		return state;
+	}
 	
 	public static string AsString(this int[] source)
 	{
