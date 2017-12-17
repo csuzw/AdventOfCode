@@ -19,3 +19,4 @@ http://adventofcode.com/
 14. [Disk Defragmentation](https://github.com/csuzw/AdventOfCode/blob/master/14DiskDefragmentation.linq)
 15. [Dueling Generators](https://github.com/csuzw/AdventOfCode/blob/master/15DuelingGenerators.linq)
 16. [Permutation Promenade](https://github.com/csuzw/AdventOfCode/blob/master/16PermutationPromenade.linq)
+17. [Spinlock](https://github.com/csuzw/AdventOfCode/blob/master/17Spinlock.linq)
