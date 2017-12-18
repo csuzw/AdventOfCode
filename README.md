@@ -20,3 +20,4 @@ http://adventofcode.com/
 15. [Dueling Generators](https://github.com/csuzw/AdventOfCode/blob/master/15DuelingGenerators.linq)
 16. [Permutation Promenade](https://github.com/csuzw/AdventOfCode/blob/master/16PermutationPromenade.linq)
 17. [Spinlock](https://github.com/csuzw/AdventOfCode/blob/master/17Spinlock.linq)
+18. [Duet](https://github.com/csuzw/AdventOfCode/blob/master/18Duet.linq) (incomplete)
