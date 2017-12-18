@@ -3,6 +3,7 @@
 void Main()
 {
 	DuetPartOne(Input).Dump();
+	DuetPartTwo(Input).Dump();
 }
 
 long DuetPartOne(string[] input)
@@ -10,109 +11,27 @@ long DuetPartOne(string[] input)
 	var processor = new PartOneProcessor();
 	var instructions = input.Select(i => new Instruction(i)).ToArray();
 	processor.Execute(instructions);
-	return processor.Sound;
+	return processor.Result;
 }
 
-//long DuetPartTwo(string[] input)
-//{
-//	var p0 = new PartTwoProcessor(0);
-//	var p1 = new PartTwoProcessor(1);
-//	var instructions = input.Select(i => new Instruction(i)).ToArray();
-//}
-//
-//class PartTwoProcessor : Processor, IPartner
-//{
-//	private IPartner _partner;
-//	private readonly Queue<long> _messageQueue = new Queue<long>();
-//	
-//	public PartTwoProcessor(int id) : base(id)
-//	{
-//	}
-//
-//	public void Attach(IPartner partner)
-//	{
-//		_partner = partner;
-//	}
-//
-//	public bool IsBlocked { get; private set; }
-//
-//	public void Push(long value)
-//	{
-//		_messageQueue.Enqueue(value);
-//		IsBlocked = false;
-//	}
-//	
-//	public override void Execute(Instruction[] instructions)
-//	{
-//		var i = 0;
-//		while (i >= 0 && i < instructions.Length)
-//		{
-//			i += Execute(instructions[i]);
-//		}
-//	}
-//
-//	protected override int Receive(Instruction instruction)
-//	{
-//		if (_messageQueue.Any())
-//		{
-//			SetValue(instruction.Arg0, _messageQueue.Dequeue());
-//			return 1;
-//		}
-//		if (_partner.IsBlocked) {} // TODO deadlock
-//		
-//		IsBlocked = true;
-//	}
-//
-//	protected override int Send(Instruction instruction)
-//	{
-//		_partner.Push(GetValue(instruction.Arg0));
-//		return 1;
-//	}
-//}
-//
-//interface IPartner
-//{
-//	bool IsBlocked { get; }
-//	void Push(long value);
-//}
-
-class PartOneProcessor : Processor
+long DuetPartTwo(string[] input)
 {
-	public long Sound { get; private set; }
-	private bool _recover = false;
-	
-	public PartOneProcessor() : base(0)
-	{		
-	}
-
-	public override void Execute(Instruction[] instructions)
-	{
-		var i = 0;
-		while (!_recover && i >= 0 && i < instructions.Length)
-		{
-			i += Execute(instructions[i]);
-		}
-	}
-	
-	protected override int Send(Instruction instruction)
-	{
-		Sound = GetValue(instruction.Arg0);
-		return 1;
-	}
-
-	protected override int Receive(Instruction instruction)
-	{
-		_recover = (GetValue(instruction.Arg0) != 0);
-		return 1;
-	}
+	var processor = new PartTwoProcessor();
+	var instructions = input.Select(i => new Instruction(i)).ToArray();
+	processor.Execute(instructions);
+	return processor.Result;
 }
 
-abstract class Processor
+class PartOneProcessor
 {
+	public long Result { get; private set; }
+
 	private readonly Dictionary<string, Func<Instruction, int>> _operations;
 	private readonly Dictionary<string, long> _registers;
-
-	protected Processor(int id)
+	
+	private bool _recover = false;
+	
+	public PartOneProcessor()
 	{
 		_operations = new Dictionary<string, Func<Instruction, int>>
 		{
@@ -124,33 +43,46 @@ abstract class Processor
 			{"rcv", Receive},
 			{"jgz", JumpIfGreaterThanZero},
 		};
-		
-		_registers = new Dictionary<string, long>()
-		{
-			{"p", id},	
-		};
+
+		_registers = new Dictionary<string, long>();
 	}
-	
-	public abstract void Execute(Instruction[] instructions);
-	
-	protected int Execute(Instruction instruction)
+
+	public void Execute(Instruction[] instructions)
+	{
+		var i = 0;
+		while (!_recover && i >= 0 && i < instructions.Length)
+		{
+			i += Execute(instructions[i]);
+		}
+	}
+
+	private int Execute(Instruction instruction)
 	{
 		return _operations[instruction.OpCode](instruction);
 	}
 
-	protected abstract int Send(Instruction instruction);
-	protected abstract int Receive(Instruction instruction);
-
-	protected long GetValue(string arg)
+	private long GetValue(string arg)
 	{
 		return int.TryParse(arg, out var result)
 			? result
 			: GetRegisterValue(arg);
 	}
-	
-	protected void SetValue(string name, long value)
+
+	private void SetValue(string name, long value)
 	{
 		_registers[name] = value;
+	}
+
+	private int Send(Instruction instruction)
+	{
+		Result = GetValue(instruction.Arg0);
+		return 1;
+	}
+
+	private int Receive(Instruction instruction)
+	{
+		_recover = (GetValue(instruction.Arg0) != 0);
+		return 1;
 	}
 
 	private int Set(Instruction instruction)
@@ -189,12 +121,128 @@ abstract class Processor
 	}
 }
 
+class PartTwoProcessor
+{
+	public long Result { get; private set; }
+
+	private readonly Dictionary<string, Func<int, Instruction, int>> _operations;
+	private readonly (Dictionary<string, long> registers, Queue<long> messages, int position)[] _processors;
+
+	public PartTwoProcessor()
+	{
+		_operations = new Dictionary<string, Func<int, Instruction, int>>
+		{
+			{"snd", Send},
+			{"set", Set},
+			{"add", Add},
+			{"mul", Multiply},
+			{"mod", Modulo},
+			{"rcv", Receive},
+			{"jgz", JumpIfGreaterThanZero},
+		};
+
+		_processors = new[]
+		{
+			(new Dictionary<string, long> { { "p", 0 } }, new Queue<long>(), 0),
+			(new Dictionary<string, long> { { "p", 1 } }, new Queue<long>(), 0),
+		};
+	}
+
+	public void Execute(Instruction[] instructions)
+	{
+		var currentId = 0;
+		var deadlock = false;
+		while (IsRunning(0) || IsRunning(1))
+		{
+			var processor = _processors[currentId];
+			var inc = Execute(currentId, instructions[processor.position]);
+			_processors[currentId] = (processor.registers, processor.messages, processor.position + inc);
+			if (inc == 0)
+			{
+				if (deadlock) break;
+				currentId = (currentId + 1) % 2;
+			}
+			deadlock = inc == 0;
+		}
+
+		bool IsRunning(int id) => _processors[id].position >= 0 && _processors[id].position < instructions.Length;
+	}
+
+	protected int Execute(int id, Instruction instruction)
+	{
+		return _operations[instruction.OpCode](id, instruction);
+	}
+
+	protected int Send(int id, Instruction instruction)
+	{
+		_processors[(id + 1) % 2].messages.Enqueue(GetValue(id, instruction.Arg0));
+		Result += id;
+		return 1;
+	}
+
+	protected int Receive(int id, Instruction instruction)
+	{
+		var messages = _processors[id].messages;
+		if (!messages.Any()) return 0;
+
+		SetValue(id, instruction.Arg0, messages.Dequeue());
+		return 1;
+	}
+
+	protected long GetValue(int id, string arg)
+	{
+		return int.TryParse(arg, out var result)
+			? result
+			: GetRegisterValue(id, arg);
+	}
+
+	protected void SetValue(int id, string name, long value)
+	{
+		_processors[id].registers[name] = value;
+	}
+
+	private int Set(int id, Instruction instruction)
+	{
+		SetValue(id, instruction.Arg0, GetValue(id, instruction.Arg1));
+		return 1;
+	}
+
+	private int Add(int id, Instruction instruction)
+	{
+		SetValue(id, instruction.Arg0, GetValue(id, instruction.Arg0) + GetValue(id, instruction.Arg1));
+		return 1;
+	}
+
+	private int Multiply(int id, Instruction instruction)
+	{
+		SetValue(id, instruction.Arg0, GetValue(id, instruction.Arg0) * GetValue(id, instruction.Arg1));
+		return 1;
+	}
+
+	private int Modulo(int id, Instruction instruction)
+	{
+		SetValue(id, instruction.Arg0, GetValue(id, instruction.Arg0) % GetValue(id, instruction.Arg1));
+		return 1;
+	}
+
+	private int JumpIfGreaterThanZero(int id, Instruction instruction)
+	{
+		return GetValue(id, instruction.Arg0) > 0 ? (int)GetValue(id, instruction.Arg1) : 1;
+	}
+
+	private long GetRegisterValue(int id, string registerName)
+	{
+		_processors[id].registers.TryGetValue(registerName, out var registerValue);
+		return registerValue;
+	}
+}
+
 class Instruction
 {
 	public string OpCode { get; }
 	public string Arg0 { get; }
 	public string Arg1 { get; }
-	
+
 	public Instruction(string input)
 	{
 		var parts = input.Split(' ');
