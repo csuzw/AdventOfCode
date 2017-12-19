@@ -21,3 +21,4 @@ http://adventofcode.com/
 16. [Permutation Promenade](https://github.com/csuzw/AdventOfCode/blob/master/16PermutationPromenade.linq)
 17. [Spinlock](https://github.com/csuzw/AdventOfCode/blob/master/17Spinlock.linq)
 18. [Duet](https://github.com/csuzw/AdventOfCode/blob/master/18Duet.linq)
+19. [A Series of Tubes](https://github.com/csuzw/AdventOfCode/blob/master/19ASeriesOfTubes.linq)
