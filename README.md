@@ -23,3 +23,4 @@ http://adventofcode.com/
 18. [Duet](https://github.com/csuzw/AdventOfCode/blob/master/18Duet.linq)
 19. [A Series of Tubes](https://github.com/csuzw/AdventOfCode/blob/master/19ASeriesOfTubes.linq)
 20. [Particle Swarm](https://github.com/csuzw/AdventOfCode/blob/master/20ParticleSwarm.linq)
+21. [Fractal Art](https://github.com/csuzw/AdventOfCode/blob/master/21FractalArt.linq)
