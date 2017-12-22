@@ -24,3 +24,4 @@ http://adventofcode.com/
 19. [A Series of Tubes](https://github.com/csuzw/AdventOfCode/blob/master/2017/19ASeriesOfTubes.linq)
 20. [Particle Swarm](https://github.com/csuzw/AdventOfCode/blob/master/2017/20ParticleSwarm.linq)
 21. [Fractal Art](https://github.com/csuzw/AdventOfCode/blob/master/2017/21FractalArt.linq)
+22. [Sporifica Virus](https://github.com/csuzw/AdventOfCode/blob/master/2017/22SporificaVirus.linq)
