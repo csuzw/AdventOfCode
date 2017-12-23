@@ -25,3 +25,4 @@ http://adventofcode.com/
 20. [Particle Swarm](https://github.com/csuzw/AdventOfCode/blob/master/2017/20ParticleSwarm.linq)
 21. [Fractal Art](https://github.com/csuzw/AdventOfCode/blob/master/2017/21FractalArt.linq)
 22. [Sporifica Virus](https://github.com/csuzw/AdventOfCode/blob/master/2017/22SporificaVirus.linq)
+23. [Coprocessor Conflagration](https://github.com/csuzw/AdventOfCode/blob/master/2017/23CoprocessorConflagration.linq)
