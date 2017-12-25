@@ -27,3 +27,4 @@ http://adventofcode.com/
 22. [Sporifica Virus](https://github.com/csuzw/AdventOfCode/blob/master/2017/22SporificaVirus.linq)
 23. [Coprocessor Conflagration](https://github.com/csuzw/AdventOfCode/blob/master/2017/23CoprocessorConflagration.linq)
 24. [Electromagnetic Moat](https://github.com/csuzw/AdventOfCode/blob/master/2017/24ElectromagneticMoat.linq)
+25. [The Halting Problem](https://github.com/csuzw/AdventOfCode/blob/master/2017/25TheHaltingProblem.linq)
