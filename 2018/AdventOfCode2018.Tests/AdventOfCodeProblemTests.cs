@@ -1,4 +1,5 @@
 using AdventOfCode2018;
+using AdventOfCode2018.Problems;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System;
@@ -40,11 +41,17 @@ namespace Tests
         private static IEnumerable GetPartOneTestCases()
         {
             yield return new TestCaseData(new ChronalCalibration(), "01ChronalCalibration.dat").Returns("580");
+            yield return new TestCaseData(new InventoryManagementSystem(), "02InventoryManagementSystem.dat").Returns("7163");
+            yield return new TestCaseData(new NoMatterHowYouSliceIt(), "03NoMatterHowYouSliceIt.dat").Returns(UnknownResult);
+            yield return new TestCaseData(new ReposeRecord(), "04ReposeRecord.dat").Returns(UnknownResult);
         }
 
         private static IEnumerable GetPartTwoTestCases()
         {
             yield return new TestCaseData(new ChronalCalibration(), "01ChronalCalibration.dat").Returns("81972");
+            yield return new TestCaseData(new InventoryManagementSystem(), "02InventoryManagementSystem.dat").Returns("ighfbyijnoumxjlxevacpwqtr");
+            yield return new TestCaseData(new NoMatterHowYouSliceIt(), "03NoMatterHowYouSliceIt.dat").Returns(UnknownResult);
+            yield return new TestCaseData(new ReposeRecord(), "04ReposeRecord.dat").Returns(UnknownResult);
         }
 
         private static string[] GetInput(string fileName)
